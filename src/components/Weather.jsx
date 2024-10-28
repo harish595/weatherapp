@@ -12,6 +12,7 @@ import wind from "../assests/wind.png";
 const Weather = () => {
     const inputRef = useRef();
     const [weatherData, setWeatherData] = useState(false);
+    console.log(weatherData);
     const allIcons = {
         "01d": clear,
         "01n": clear,
@@ -35,19 +36,19 @@ const Weather = () => {
             return;
         }
         try {
-            // let API_ID= "298e9fb3000b140772fa49273dcb9769"
-            const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
-            console.log(apiKey);
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
+            let API_ID= "298e9fb3000b140772fa49273dcb9769"
+            // const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+            // console.log(apiKey);
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_ID}`;
+            // console.log(url);
             const response = await fetch(url);
             const data = await response.json();
-
+            // console.log(data);
             if(!response.ok){
                 alert(data.message);
                 return;
             }
-            console.log(data);
+            // console.log(data);
             const icon = allIcons[data.weather[0].icon] || clear;
             setWeatherData({
                 humidity: data.main.humidity,
@@ -62,7 +63,7 @@ const Weather = () => {
         }
     }
     useEffect(()=>{
-        search("Bengaluru")
+        search()
     },[])
     return (
         <div className='weather'>
